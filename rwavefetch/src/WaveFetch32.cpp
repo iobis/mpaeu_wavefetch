@@ -8,10 +8,10 @@ using namespace Rcpp;
 
 
 
-//' Compute the mean of a numeric vector.
-//'
-//' @param x NumericVector of values.
-//' @return The arithmetic mean of x.
+// Compute the mean of a numeric vector.
+//
+// @param x NumericVector of values.
+// @return The arithmetic mean of x.
 // [[Rcpp::export]]
 double meanC(NumericVector x) {
   int n = x.size();
@@ -25,13 +25,13 @@ double meanC(NumericVector x) {
 
 
 
-//' Identify coastal cells in a land matrix.
-//'
-//' This function examines each cell and its 3×3 neighborhood in the provided land matrix.
-//' A cell is considered coastal if it is land (value 1) but not completely surrounded by land.
-//'
-//' @param land IntegerMatrix representing land (1) and water (0).
-//' @return An IntegerMatrix with coastal cells marked as 1.
+// Identify coastal cells in a land matrix.
+//
+// This function examines each cell and its 3×3 neighborhood in the provided land matrix.
+// A cell is considered coastal if it is land (value 1) but not completely surrounded by land.
+//
+// @param land IntegerMatrix representing land (1) and water (0).
+// @return An IntegerMatrix with coastal cells marked as 1.
 // [[Rcpp::export]]
 IntegerMatrix isitcoast(IntegerMatrix land) {
   int ncolx = land.ncol();
@@ -63,14 +63,14 @@ IntegerMatrix isitcoast(IntegerMatrix land) {
 
 
 
-//' Identify near-coast cells based on a land matrix and a search distance.
-//'
-//' For cells identified as coastal, this function marks surrounding water cells (value 0) 
-//' within a distance dx as near-coast (value 2).
-//'
-//' @param land IntegerMatrix representing land (1) and water (0).
-//' @param dx Integer specifying the search distance (in cells).
-//' @return An IntegerMatrix with coastal cells marked as 1 and near-coast cells marked as 2.
+// Identify near-coast cells based on a land matrix and a search distance.
+//
+// For cells identified as coastal, this function marks surrounding water cells (value 0) 
+// within a distance dx as near-coast (value 2).
+//
+// @param land IntegerMatrix representing land (1) and water (0).
+// @param dx Integer specifying the search distance (in cells).
+// @return An IntegerMatrix with coastal cells marked as 1 and near-coast cells marked as 2.
 // [[Rcpp::export]]
 IntegerMatrix isitnearcoast(IntegerMatrix land, int dx) {
   int ncolx = land.ncol();
@@ -100,9 +100,9 @@ IntegerMatrix isitnearcoast(IntegerMatrix land, int dx) {
 }
 
 
-//' Compute the wind fetch metric using log-transformed distances.
+//' Compute the wave fetch metric using log-transformed distances.
 //'
-//' This function calculates a wind fetch metric (wx32) for coastal cells,
+//' This function calculates a wave fetch metric (wx32) for coastal cells,
 //' and uses a log-transformed approach for the random distance search.
 //' An alternative mapping search is performed when the primary search is out-of-bound.
 //'
@@ -123,7 +123,7 @@ IntegerMatrix isitnearcoast(IntegerMatrix land, int dx) {
 //' @param land2cellszx Double: cell size in the x-direction for land2.
 //' @param land2cellszy Double: cell size in the y-direction for land2.
 //' @param verbose Integer print messages to track progress. Use 0 for no messages, 1 for progress bar or 2 for text messages.
-//' @return A NumericMatrix with the computed wind fetch metric based on the log-transformed search approach.
+//' @return A NumericMatrix with the computed wave fetch metric based on the log-transformed search approach.
 //' @export
 // [[Rcpp::export]]
 NumericMatrix coastal_wave_fetch(IntegerMatrix land1, IntegerMatrix land2, int dx, int dwx, int cl, int jit,
@@ -289,14 +289,15 @@ NumericMatrix coastal_wave_fetch(IntegerMatrix land1, IntegerMatrix land2, int d
     }
     if (verbose == 2) Rcout << j << std::endl;
   }
+  if (verbose >= 1) Rcout << "Done!" << std::endl;
   return wx32;
 }
 
 
 
-//' Compute the wind orientation metric using log-transformed distances.
+//' Compute the wave orientation metric using log-transformed distances.
 //'
-//' This function calculates a wind orientation metric (wx32) for coastal cells,
+//' This function calculates a wave orientation metric (wx32) for coastal cells,
 //' and uses a log-transformed approach for the random distance search.
 //' An alternative mapping search is performed when the primary search is out-of-bound.
 //'
@@ -317,7 +318,7 @@ NumericMatrix coastal_wave_fetch(IntegerMatrix land1, IntegerMatrix land2, int d
 //' @param land2cellszx Double: cell size in the x-direction for land2.
 //' @param land2cellszy Double: cell size in the y-direction for land2.
 //' @param verbose Integer print messages to track progress. Use 0 for no messages, 1 for progress bar or 2 for text messages.
-//' @return A NumericMatrix with the computed wind fetch metric based on the log-transformed search approach.
+//' @return A NumericMatrix with the computed wave fetch metric based on the log-transformed search approach.
 //' @export
 // [[Rcpp::export]]
 NumericMatrix coastal_wave_orientation(IntegerMatrix land1, IntegerMatrix land2, int dx, int dwx, int cl, int jit,
@@ -483,13 +484,14 @@ NumericMatrix coastal_wave_orientation(IntegerMatrix land1, IntegerMatrix land2,
     }
     if (verbose == 2) Rcout << j << std::endl;
   }
+  if (verbose >= 1) Rcout << "Done!" << std::endl;
   return wx32;
 }
 
 
-//' Compute the wind fetch directionality using log-transformed distances.
+//' Compute the wave directionality metric using log-transformed distances.
 //'
-//' This function calculates a wind fetch metric (wx32) for coastal cells,
+//' This function calculates a wave directionality metric (wx32) for coastal cells,
 //' and uses a log-transformed approach for the random distance search.
 //' An alternative mapping search is performed when the primary search is out-of-bound.
 //'
@@ -510,7 +512,7 @@ NumericMatrix coastal_wave_orientation(IntegerMatrix land1, IntegerMatrix land2,
 //' @param land2cellszx Double: cell size in the x-direction for land2.
 //' @param land2cellszy Double: cell size in the y-direction for land2.
 //' @param verbose Integer print messages to track progress. Use 0 for no messages, 1 for progress bar or 2 for text messages.
-//' @return A NumericMatrix with the computed wind fetch metric based on the log-transformed search approach.
+//' @return A NumericMatrix with the computed wave fetch metric based on the log-transformed search approach.
 //' @export
 // [[Rcpp::export]]
 NumericMatrix coastal_wave_direction(IntegerMatrix land1, IntegerMatrix land2, int dx, int dwx, int cl, int jit,
@@ -675,6 +677,7 @@ NumericMatrix coastal_wave_direction(IntegerMatrix land1, IntegerMatrix land2, i
     }
     if(verbose == 2) Rcout << j << std::endl;
   }
+  if (verbose >= 1) Rcout << "Done!" << std::endl;
   return wx32;
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{coastal_wave_fetch}
 \alias{coastal_wave_fetch}
-\title{Compute the wind fetch metric using log-transformed distances.}
+\title{Compute the wave fetch metric using log-transformed distances.}
 \usage{
 coastal_wave_fetch(
   land1,
@@ -54,10 +54,10 @@ coastal_wave_fetch(
 \item{nsearches}{Integer specifying the number of iterations for the random search.}
 }
 \value{
-A NumericMatrix with the computed wind fetch metric based on the log-transformed search approach.
+A NumericMatrix with the computed wave fetch metric based on the log-transformed search approach.
 }
 \description{
-This function calculates a wind fetch metric (wx32) for coastal cells,
+This function calculates a wave fetch metric (wx32) for coastal cells,
 and uses a log-transformed approach for the random distance search.
 An alternative mapping search is performed when the primary search is out-of-bound.
 }
