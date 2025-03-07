@@ -105,7 +105,7 @@ for (metric in c("fetch", "orientation", "direction")) {
         land1llx, land1uly, land1cellszx, land1cellszy,
         land2llx, land2uly, land2cellszx, land2cellszy
     )
-    result_r <- to_raster(result_r, land1_ext, land1_crs)
+    result_r <- to_raster(result, land1_ext, land1_crs)
     plot(result_r, main = metric)
     writeRaster(result_r, paste0("wavefetch_", metric, ".tif"), overwrite = T)
 }
