@@ -82,3 +82,30 @@ wave_direction <- coastal_wave_direction(
 wave_direction_r <- to_raster(wave_direction, land1_ext, land1_crs)
 plot(wave_direction_r, main = "Directionality")
 writeRaster(wave_direction_r, outfile_3, overwrite = T)
+
+
+# The same can now be obtained with a single function -----
+#
+# wave_fetch <- coastal_wave_fetch(
+#     type = "fetch",
+#     land1 = land1_matrix,
+#     land2 = land2_matrix, 
+#     dx = 50, dwx = 2000, cl = 2, jit = 1,
+#     land1llx, land1uly, land1cellszx, land1cellszy,
+#     land2llx, land2uly, land2cellszx, land2cellszy
+# )
+#
+# We can then simply use a for loop or lapply to obtain all metrics
+for (metric in c("fetch", "orientation", "direction")) {
+    result <- coastal_wave(
+        type = metric,
+        land1 = land1_matrix,
+        land2 = land2_matrix, 
+        dx = 50, dwx = 2000, cl = 2, jit = 1,
+        land1llx, land1uly, land1cellszx, land1cellszy,
+        land2llx, land2uly, land2cellszx, land2cellszy
+    )
+    result_r <- to_raster(result_r, land1_ext, land1_crs)
+    plot(result_r, main = metric)
+    writeRaster(result_r, paste0("wavefetch_", metric, ".tif"), overwrite = T)
+}
